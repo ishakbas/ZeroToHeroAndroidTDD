@@ -6,15 +6,16 @@ import java.io.Serializable
 
 interface UiState : Serializable {
     fun apply(textView: TextView, button: Button)
-    data class Base(val text: String) : UiState {
+    data class Base(private val text: String) : UiState {
         override fun apply(textView: TextView, button: Button) {
-            TODO("Not yet implemented")
+            textView.text = text
         }
     }
 
-    data class Max(val text: String) : UiState {
+    data class Max(private val text: String) : UiState {
         override fun apply(textView: TextView, button: Button) {
-            TODO("Not yet implemented")
+            textView.text = text
+            button.isEnabled = false
         }
     }
 }
