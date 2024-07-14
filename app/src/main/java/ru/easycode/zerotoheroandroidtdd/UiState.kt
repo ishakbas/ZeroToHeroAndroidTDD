@@ -5,25 +5,30 @@ import android.widget.TextView
 import java.io.Serializable
 
 interface UiState : Serializable {
-    fun apply(textView: TextView, button: Button) = Unit
+    fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) = Unit
 
-    abstract class AbstractUiState(private val text: String) : UiState {
-        override fun apply(textView: TextView, button: Button) {
+
+    data class Base(private val text: String) : UiState {
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
             textView.text = text
+            decrementButton.isEnabled = true
+            incrementButton.isEnabled = true
         }
     }
 
-    data class Base(private val text: String) : AbstractUiState(text)
-
-    data class Max(private val text: String) : AbstractUiState(text) {
-        override fun apply(textView: TextView, button: Button) {
-            TODO("Not yet implemented")
+    data class Max(private val text: String) : UiState {
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
+            textView.text = text
+            decrementButton.isEnabled = true
+            incrementButton.isEnabled = false
         }
     }
 
-    data class Min(private val text: String) : AbstractUiState(text) {
-        override fun apply(textView: TextView, button: Button) {
-            TODO("Not yet implemented")
+    data class Min(private val text: String) : UiState {
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
+            textView.text = text
+            decrementButton.isEnabled = false
+            incrementButton.isEnabled = true
         }
     }
 
